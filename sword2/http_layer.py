@@ -1,4 +1,5 @@
-from sword2_logging import logging
+from __future__ import absolute_import
+from .sword2_logging import logging
 http_l = logging.getLogger(__name__)
 
 class HttpResponse(object):
@@ -51,7 +52,7 @@ class HttpLib2Response(HttpResponse):
         return self.resp.get(att, default)
         
     def keys(self):
-        return self.resp.keys()
+        return list(self.resp.keys())
 
 class HttpLib2Layer(HttpLayer):
     def __init__(self, cache_dir, timeout=30):
@@ -110,7 +111,7 @@ class UrlLib2Response(HttpResponse):
         return self.headers.get(att, default)
         
     def keys(self):
-        return self.headers.keys() + ["status"]
+        return list(self.headers.keys()) + ["status"]
 
 # http://stackoverflow.com/questions/2502596/python-http-post-a-large-file-with-streaming
 """

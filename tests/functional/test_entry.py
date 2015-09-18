@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+from __future__ import print_function
 from . import TestController
 
 from sword2 import Entry
@@ -6,7 +8,7 @@ from sword2.utils import NS
 class TestEntry(TestController):
     def test_01_blank_init(self):
         e = Entry()
-        print e.entry.getchildren()
+        print(e.entry.getchildren())
         assert len(e.entry.getchildren()) == 2   # generator, updated are there by default
     
     def test_02_init_without_author(self):

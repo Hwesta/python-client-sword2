@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 from . import TestController
 
 from sword2 import SDCollection, ServiceDocument

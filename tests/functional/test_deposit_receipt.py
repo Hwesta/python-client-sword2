@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 from . import TestController
 
 from sword2.deposit_receipt import Deposit_Receipt
@@ -81,7 +82,7 @@ class TestDepositReceipt(TestController):
     def test_03_content_iri(self):
         dr = Deposit_Receipt(DR)
         assert dr.edit == "http://www.swordserver.ac.uk/col1/mydeposit.atom"
-        assert "http://www.swordserver.ac.uk/col1/mydeposit" in dr.content.keys()
+        assert "http://www.swordserver.ac.uk/col1/mydeposit" in list(dr.content.keys())
         assert dr.content["http://www.swordserver.ac.uk/col1/mydeposit"]['type'] == "application/zip"
         # Check convenience attribute 'cont_iri'
         assert dr.cont_iri == "http://www.swordserver.ac.uk/col1/mydeposit"

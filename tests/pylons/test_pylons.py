@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 from . import TestController
 from sword2 import Connection, Entry, Error_Document, Atom_Sword_Statement, Ore_Sword_Statement
 from sword2.compatible_libs import etree

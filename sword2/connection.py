@@ -9,22 +9,23 @@ See http://sword-app.svn.sourceforge.net/viewvc/sword-app/spec/trunk/SWORDProfil
 about the SWORD2 AtomPub profile.
  
 """
-from sword2_logging import logging
+from __future__ import absolute_import
+from .sword2_logging import logging
 conn_l = logging.getLogger(__name__)
 
-from utils import Timer, NS, get_md5, create_multipart_related
+from .utils import Timer, NS, get_md5, create_multipart_related
 
-from transaction_history import Transaction_History
-from service_document import ServiceDocument
-from deposit_receipt import Deposit_Receipt
-from error_document import Error_Document
-from statement import Atom_Sword_Statement, Ore_Sword_Statement
-from exceptions import *
+from .transaction_history import Transaction_History
+from .service_document import ServiceDocument
+from .deposit_receipt import Deposit_Receipt
+from .error_document import Error_Document
+from .statement import Atom_Sword_Statement, Ore_Sword_Statement
+from .exceptions import *
 
-from compatible_libs import etree
+from .compatible_libs import etree
 
 # import httplib2
-import http_layer
+from . import http_layer
 
 class Connection(object):
     """
@@ -1732,8 +1733,8 @@ Response:
         if self.honour_receipts and packaging:
             # Make sure that the packaging format is available from the deposit receipt, if loaded
             conn_l.debug("Checking that the packaging format '%s' is available." % content_iri)
-            conn_l.debug("Cached Cont-IRI Receipts: %s" % self.cont_iris.keys())
-            if content_iri in self.cont_iris.keys():
+            conn_l.debug("Cached Cont-IRI Receipts: %s" % list(self.cont_iris.keys()))
+            if content_iri in list(self.cont_iris.keys()):
                 if not (packaging in self.cont_iris[content_iri].packaging):
                     conn_l.error("Desired packaging format '%' not available from the server, according to the deposit receipt. Change the client parameter 'honour_receipts' to False to avoid this check.")
                     return self._return_error_or_exception(PackagingFormatNotAvailable, {}, "")

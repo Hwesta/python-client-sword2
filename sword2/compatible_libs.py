@@ -19,8 +19,9 @@ Provides - `etree` and `json`
     
 If no suitable library is found, then it will pass back `None`
 """
+from __future__ import absolute_import
 
-from sword2_logging import logging 
+from .sword2_logging import logging 
 
 cl_l = logging.getLogger(__name__)
 

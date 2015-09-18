@@ -13,15 +13,16 @@ Two other classes, `Collection_Feed` and `Sword_Statement` are works in progress
 for the things they logically handle.
 
 """
+from __future__ import absolute_import
 
-from sword2_logging import logging
-from implementation_info import __version__
+from .sword2_logging import logging
+from .implementation_info import __version__
 coll_l = logging.getLogger(__name__)
 
-from compatible_libs import etree
-from utils import NS, get_text
+from .compatible_libs import etree
+from .utils import NS, get_text
 
-from deposit_receipt import Deposit_Receipt
+from .deposit_receipt import Deposit_Receipt
 
 from datetime import datetime
 
@@ -224,7 +225,7 @@ class SDCollection(object):
         
         NB this uses the attributes of the object, not the cached DOM object, so information can be altered/added
         on the fly."""
-        from compatible_libs import json
+        from .compatible_libs import json
         if json:
             _j = {'title':self.title,
                   'href':self.href,

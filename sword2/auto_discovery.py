@@ -1,4 +1,5 @@
-from sword2_logging import logging
+from __future__ import absolute_import
+from .sword2_logging import logging
 ad_l = logging.getLogger(__name__)
 
 # FIXME: sgmllib is deprecated, and removed from Python 3.  If moving to

@@ -4,6 +4,7 @@
 """
 `sword2` logging
 """
+from __future__ import absolute_import
 
 import imp
 import os

@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+from __future__ import print_function
 from . import TestController
 
 from sword2 import Connection, Entry
@@ -349,7 +351,7 @@ class TestConnection(TestController):
                                               filename = "readthisextrafile.txt",
                                               packaging = "http://purl.org/net/sword/package/Binary",
                                               metadata_entry = e)
-        print dr.code
+        print(dr.code)
         assert dr.code == 200
 
 
@@ -395,7 +397,7 @@ class TestConnection(TestController):
                                     in_progress=True)
         assert deposit_receipt.edit != None
         dr = conn.complete_deposit(se_iri = deposit_receipt.se_iri)
-        print "This will fail until the sss.py SWORD2 server responds properly, rather than with code 201"
+        print("This will fail until the sss.py SWORD2 server responds properly, rather than with code 201")
         assert dr.code == 200
         
     def test_24_get_sword_statement(self):
@@ -410,7 +412,7 @@ class TestConnection(TestController):
                                     in_progress=True)
         ss_iri = None
         for item_dict in deposit_receipt.links['http://purl.org/net/sword/terms/statement']:
-            if item_dict.has_key('type') and item_dict.get('type', None) == "application/atom+xml;type=feed":
+            if 'type' in item_dict and item_dict.get('type', None) == "application/atom+xml;type=feed":
                 ss_iri = item_dict.get('href')
         assert ss_iri != None
         ss = conn.get_atom_sword_statement(ss_iri)
