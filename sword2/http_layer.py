@@ -74,9 +74,9 @@ class HttpLib2Layer(HttpLayer):
 # Guest urllib2 implementation
 ################################################################################
 
-import urllib2, base64
+import urllib.request, urllib.error, urllib.parse, base64
 
-class PreemptiveBasicAuthHandler(urllib2.HTTPBasicAuthHandler):
+class PreemptiveBasicAuthHandler(urllib.request.HTTPBasicAuthHandler):
     def __init__(self, username, password):
         self.username = username
         self.password = password
@@ -137,13 +137,13 @@ class UrlLib2Layer(HttpLayer):
     def __init__(self, opener=None):
         self.opener = opener
         if self.opener is None:
-            self.opener = urllib2.build_opener()
+            self.opener = urllib.request.build_opener()
     
     def add_credentials(self, username, password):
         auth_handler = PreemptiveBasicAuthHandler(username, password)
         current_handlers = self.opener.handlers
         new_handlers = current_handlers + [auth_handler]
-        self.opener = urllib2.build_opener(*new_handlers)
+        self.opener = urllib.request.build_opener(*new_handlers)
     
     def request(self, uri, method, headers=None, payload=None):
         # NOTE: payload can be a file or a string
@@ -153,22 +153,22 @@ class UrlLib2Layer(HttpLayer):
         # should return a tuple of an HttpResponse object and the content
         try:
             if method == "GET":
-                req = urllib2.Request(uri, None, headers)
+                req = urllib.request.Request(uri, None, headers)
                 response = self.opener.open(req)
                 return UrlLib2Response(response), response.read()
             elif method == "POST":
-                req = urllib2.Request(uri, payload, headers)
+                req = urllib.request.Request(uri, payload, headers)
                 response = self.opener.open(req)
                 return UrlLib2Response(response), response.read()
             elif method == "PUT":
-                req = urllib2.Request(uri, payload, headers)
+                req = urllib.request.Request(uri, payload, headers)
                 # monkey-patch the request method (which seems to be the fastest
                 # way to do this)
                 req.get_method = lambda: 'PUT'
                 response = self.opener.open(req)
                 return UrlLib2Response(response), response.read()
             elif method == "DELETE":
-                req = urllib2.Request(uri, None, headers)
+                req = urllib.request.Request(uri, None, headers)
                 # monkey-patch the request method (which seems to be the fastest
                 # way to do this)
                 req.get_method = lambda: 'DELETE'
@@ -176,7 +176,7 @@ class UrlLib2Layer(HttpLayer):
                 return UrlLib2Response(response), response.read()
             else:
                 raise NotImplementedError()
-        except urllib2.HTTPError as e:
+        except urllib.error.HTTPError as e:
             try:
                 # treat it like a normal response
                 return UrlLib2Response(e), e.read()

@@ -9,7 +9,7 @@ from sword2.compatible_libs import json
 SSS_PY_URL="http://sword-app.svn.sourceforge.net/viewvc/sword-app/sss/trunk/sss.py?revision=HEAD"
 PORT_NUMBER="8081"
 
-import subprocess, urllib, tempfile
+import subprocess, urllib.request, urllib.parse, urllib.error, tempfile
 import os
 
 import atexit
@@ -75,7 +75,7 @@ long_service_doc = '''<?xml version="1.0" ?>
 f, sss_path = tempfile.mkstemp(suffix=".py")
 os.close(f)
 
-urllib.urlretrieve(SSS_PY_URL, sss_path)
+urllib.request.urlretrieve(SSS_PY_URL, sss_path)
 sss_pid = subprocess.Popen(['python', sss_path, PORT_NUMBER])
 sleep(1)
 
